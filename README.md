@@ -1,5 +1,6 @@
 # mobile-squad
 
+
 Plugin do Claude Code com um time de agentes para entregar features em apps Kotlin Multiplatform /
 Compose Multiplatform.
 
@@ -95,3 +96,4 @@ instruções de commit) e roda `claude plugin validate`.
 
 Design: [`docs/specs`](docs/specs/2026-09-19-mobile-squad-design.md). Plano:
 [`docs/plans`](docs/plans/2026-09-19-mobile-squad.md).
+
