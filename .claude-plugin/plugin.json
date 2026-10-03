@@ -1,0 +1,9 @@
+{
+  "name": "mobile-squad",
+  "version": "0.2.0",
+  "description": "Time de agentes para apps Kotlin Multiplatform / Compose Multiplatform: Produto, Designer mobile, Tech Lead, Dev KMP, QA e Revisor Sênior, com discovery, tasks, implementação, testes, revisão e aceite.",
+  "author": {
+    "name": "Vitor Walcker"
+  },
+  "keywords": ["kotlin", "kmp", "compose-multiplatform", "mobile", "agents", "delivery"]
+}

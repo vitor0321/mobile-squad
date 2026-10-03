@@ -1,0 +1,15 @@
+{
+  "name": "mobile-squad",
+  "description": "Marketplace local do plugin mobile-squad",
+  "owner": {
+    "name": "Vitor Walcker"
+  },
+  "plugins": [
+    {
+      "name": "mobile-squad",
+      "description": "Time de agentes para apps Kotlin Multiplatform / Compose Multiplatform",
+      "version": "0.2.0",
+      "source": "./"
+    }
+  ]
+}
