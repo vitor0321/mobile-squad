@@ -19,6 +19,11 @@ Revisores (Tech Lead, Designer, Revisor Sênior) não editam código: escrevem p
 ## Fluxo
 
 ```
+claude plugin marketplace add vitor0321/mobile-squad
+claude plugin install mobile-squad@mobile-squad
+
+
+
 /squad-init  → docs/delivery/PROJECT_CONTEXT.md
 
 /discover "ideia"                                     (interativo)
