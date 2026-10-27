@@ -2,7 +2,7 @@
 
 - Revisor: senior-reviewer
 - Data: YYYY-MM-DD
-- Escopo: <!-- arquivos do diff revisados -->
+- Escopo: <!-- arquivos revisados; na rodada 2+, só os do retrabalho -->
 
 **Veredito:** APPROVED | CHANGES_REQUESTED
 
@@ -16,9 +16,11 @@
 
 | Id | Severidade | Arquivo:linha | Problema | Sugestão |
 |---|---|---|---|---|
-| CRN-10 | | | | |
+| CTN-01 | blocker/major/minor | | | |
 
 ## Critérios de aceite × evidência
+
+<!-- O gate de aceite usa esta matriz. Todo critério precisa de implementação e teste. -->
 
 | Critério | Implementado em | Testado em | Ok? |
 |---|---|---|---|

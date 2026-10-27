@@ -6,6 +6,7 @@ issue:
 depends_on: []
 module: <:modulo>
 ui: false
+risk: normal
 rework_count: 0
 ---
 
@@ -32,7 +33,9 @@ rework_count: 0
 
 ## Orientação técnica
 
-<!-- Preenchido pelo tech-lead: módulo, camadas, arquivos prováveis, padrões a seguir, riscos. -->
+<!-- Preenchido pelo tech-lead: módulo, camadas, arquivos prováveis, padrões a seguir, riscos.
+Também define `risk`: low (mudança local e previsível), normal, high (migração, concorrência,
+backend, segurança; ganha aceite do tech-lead). -->
 
 ## Respostas a apontamentos
 

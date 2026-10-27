@@ -17,7 +17,7 @@ está só o que costuma dar errado em KMP/CMP quando ninguém avisa.
 - `expect/actual` só quando não existe lib multiplataforma. Prefira `interface` em `commonMain` +
   implementação por plataforma injetada via DI: é testável com fake.
 - Recursos (strings, imagens, fontes) pelo mecanismo do app (Compose Resources, Lyricist, moko).
-- Toda task que toca `commonMain` roda o comando `ios-compile` do `PROJECT_CONTEXT`.
+- Toda task que toca `commonMain` passa pelo `ios-compile` (o `verify.sh --auto` inclui sozinho).
 
 ## Arquitetura
 
@@ -98,7 +98,5 @@ está só o que costuma dar errado em KMP/CMP quando ninguém avisa.
 
 ## Antes de devolver
 
-1. `build` e `test` do `PROJECT_CONTEXT` verdes.
-2. `lint` sem problema novo.
-3. `ios-compile` se tocou `commonMain`.
-4. Diff só com o que a task pede.
+1. `verify.sh --auto` com `RESULT: PASS` (build, test, lint e ios-compile se tocou `commonMain`).
+2. Diff só com o que a task pede.

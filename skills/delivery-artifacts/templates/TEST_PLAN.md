@@ -28,6 +28,6 @@
 
 | Id | Severidade | Critério | Comportamento esperado | Comportamento observado | Onde |
 |---|---|---|---|---|---|
-| QA1-01 | | | | | |
+| QAN-01 | | | | | |
 
 ## Não coberto e por quê

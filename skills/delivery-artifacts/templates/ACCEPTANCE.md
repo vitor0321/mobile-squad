@@ -1,37 +1,25 @@
 # Aceite: T-00X <título>
 
-- Revisor: tech-lead
-
 ## Rodada 1 — YYYY-MM-DD
+
+- Por: <!-- orquestrador (gate) | tech-lead (risk: high) -->
 
 **Veredito:** APPROVED | CHANGES_REQUESTED
 
-### Critérios de aceite
-
-| Critério | Atendido? | Evidência (código / teste) |
-|---|---|---|
-| CA1 | | |
-
 ### Verificação
 
-| Comando | Resultado | Observação |
-|---|---|---|
-| build | | |
-| test | | |
-| lint | | |
-| ios-compile | | |
+<!-- Saída resumida do verify.sh --auto: uma linha por comando. -->
 
 ### Pareceres considerados
 
-- CODE_REVIEW-rN: <!-- veredito -->
+- CODE_REVIEW-rN: <!-- veredito; matriz de critérios completa? -->
 - UI_REVIEW-rN: <!-- veredito, ou N/A -->
 
 ### Apontamentos
 
+<!-- VFN-NN (verificação vermelha) ou ACN-NN (tech-lead). "Nenhum" se aprovado. -->
+
 | Id | Severidade | Problema | Sugestão |
 |---|---|---|---|
-| AC1-01 | | | |
 
 ### Minors aceitos para depois
-
-### Resumo

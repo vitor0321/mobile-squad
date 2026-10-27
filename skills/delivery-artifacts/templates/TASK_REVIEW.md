@@ -20,7 +20,7 @@
 
 | Id | Severidade | Task | Problema | Sugestão |
 |---|---|---|---|---|
-| TR1-01 | blocker/major/minor | T-00X | | |
+| TRN-01 | blocker/major/minor | T-00X | | |
 
 ### Resumo
 

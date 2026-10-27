@@ -30,7 +30,7 @@ Atualizado em: YYYY-MM-DD
 
 ## Comandos de verificação
 
-<!-- O pipeline roda exatamente estes comandos. Use os nomes build/test/lint/ios-compile/ui-snapshot. -->
+<!-- Espelho legível de docs/delivery/verify.conf, que é o que o verify.sh executa. Mude os dois juntos. -->
 
 | Nome | Comando | Quando |
 |---|---|---|
