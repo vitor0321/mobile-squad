@@ -7,22 +7,13 @@
 
 **Veredito:** APPROVED | CHANGES_REQUESTED
 
-## Checklist por tela
-
-### S1: <nome>
-
-| Item | Ok? | Nota |
-|---|---|---|
-| Layout e hierarquia conforme UX_SPEC | | |
-| Componentes e tokens do design system (sem cor/dp soltos) | | |
-| Estados: carregando, vazio, erro, sucesso, offline | | |
-| Textos pt/en conforme UX_SPEC, sem literal no código | | |
-| Alvos de toque ≥ 48dp | | |
-| Rótulos, ordem de leitura, live regions | | |
-| Contraste | | |
-| Fonte 200% sem corte (sem altura fixa) | | |
-| Dark mode | | |
-| Teclado, safe areas, telas pequenas/grandes | | |
+<!--
+Checklist aplicado a cada tela (registre só o que falhou, como apontamento):
+layout e hierarquia conforme UX_SPEC; componentes e tokens do DS, sem cor/dp/sp soltos; os cinco
+estados (carregando, vazio, erro, sucesso, offline); textos em todos os idiomas, sem literal;
+alvos ≥ 48dp; rótulos, ordem de leitura, live regions; contraste; fonte 200% sem altura fixa;
+dark mode; teclado, safe areas, telas pequenas/grandes.
+-->
 
 ## Apontamentos
 
@@ -32,4 +23,8 @@
 
 ## Apontamentos da rodada anterior
 
+<!-- Só a partir da rodada 2: | id | resolvido? | nota | -->
+
 ## Resumo
+
+<!-- Uma ou duas frases; diga quais telas passaram no checklist inteiro. -->

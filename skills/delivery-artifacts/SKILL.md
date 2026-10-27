@@ -1,116 +1,103 @@
 ---
 name: delivery-artifacts
-description: Contrato de documentos do mobile-squad — pastas, templates, status das tasks, vereditos e o bloco de retorno "## Resultado". Use sempre que um agente do squad for ler ou escrever PRD, UX_SPEC, task, parecer, plano de testes ou relatório em docs/delivery/.
+description: Contrato de documentos do mobile-squad — pastas, templates, status das tasks, vereditos, ids de apontamento e o bloco de retorno "## Resultado". Use sempre que um agente do squad for ler ou escrever PRD, UX_SPEC, task, parecer, plano de testes ou relatório em docs/delivery/.
 ---
 
 # Documentos do squad
 
-Todo trabalho do squad vira documento Markdown no repo do app. Documento é o único canal entre os
-agentes: o que não está escrito não foi combinado.
-
-## Onde ficam
+Documento é o único canal entre os agentes: o que não está escrito não foi combinado.
 
 ```
 docs/delivery/
-  PROJECT_CONTEXT.md                     /squad-init
+  PROJECT_CONTEXT.md   verify.conf            /squad-init
   <feature-slug>/
-    PRD.md                               product-manager
-    UX_SPEC.md                           mobile-designer
-    tasks/
-      T-001-<slug>.md                    product-manager (+ orientação do tech-lead)
-    reviews/
-      TASK_REVIEW.md                     tech-lead
-      T-001/
-        TEST_PLAN.md                     qa-engineer
-        CODE_REVIEW-r1.md                senior-reviewer
-        UI_REVIEW-r1.md                  mobile-designer (só tasks com ui: true)
-        ACCEPTANCE.md                    tech-lead
-    DELIVERY_REPORT.md                   orquestrador (/deliver)
+    PRD.md  UX_SPEC.md                         product-manager, mobile-designer
+    tasks/T-001-<slug>.md                      product-manager (+ orientação do tech-lead)
+    reviews/TASK_REVIEW.md                     tech-lead
+    reviews/T-001/TEST_PLAN.md                 qa-engineer
+    reviews/T-001/CODE_REVIEW-r1.md            senior-reviewer
+    reviews/T-001/UI_REVIEW-r1.md              mobile-designer (só ui: true)
+    reviews/T-001/ACCEPTANCE.md                orquestrador, ou tech-lead se risk: high
+    DELIVERY_REPORT.md                         orquestrador
 ```
 
-`<feature-slug>` é kebab-case curto (`convite-por-link`). Tasks numeradas por feature: `T-001`,
-`T-002`… O sufixo `-rN` é a rodada de revisão (r1, r2, r3). **Nunca sobrescreva o parecer de uma
-rodada anterior**; cada rodada é um arquivo novo. `TASK_REVIEW.md`, `TEST_PLAN.md` e
-`ACCEPTANCE.md` são atualizados no lugar, com uma seção nova por rodada.
+- Parecer com `-rN` é um arquivo novo por rodada; **nunca sobrescreva uma rodada anterior**.
+  `TASK_REVIEW`, `TEST_PLAN` e `ACCEPTANCE` ganham uma seção nova por rodada.
+- Templates: `${CLAUDE_PLUGIN_ROOT}/skills/delivery-artifacts/templates/<DOCUMENTO>.md`. Preencha
+  todas as seções e apague os comentários `<!-- -->`. Seção sem conteúdo: `N/A — <motivo>`.
+- Escreva curto. Tabela lista só o que tem conteúdo; checklist registra só o que falhou.
 
-## Templates
+## Verificação
 
-Ficam em `${CLAUDE_PLUGIN_ROOT}/skills/delivery-artifacts/templates/`. Copie o template, preencha
-todas as seções e apague os comentários `<!-- -->`. Seção sem conteúdo recebe `N/A — <motivo>`,
-nunca é removida.
+Nunca rode Gradle direto para build/test/lint/ios-compile. Use `<verify>` =
+`${CLAUDE_PLUGIN_ROOT}/scripts/verify.sh`, na raiz do app:
 
-| Documento | Template |
-|---|---|
-| Contexto do app | `PROJECT_CONTEXT.md` |
-| PRD | `PRD.md` |
-| Especificação de UX | `UX_SPEC.md` |
-| Task | `TASK.md` |
-| Revisão das tasks | `TASK_REVIEW.md` |
-| Plano de testes | `TEST_PLAN.md` |
-| Revisão de código e testes | `CODE_REVIEW.md` |
-| Revisão de UI | `UI_REVIEW.md` |
-| Aceite | `ACCEPTANCE.md` |
-| Relatório de entrega | `DELIVERY_REPORT.md` |
+- `bash <verify> --auto`: build, test, lint e ios-compile se o working tree toca `commonMain`;
+- `bash <verify> test`: só um comando.
+
+Ele imprime `PASS`/`FAIL` por comando e as linhas de erro; o log completo fica em
+`.squad/logs/<nome>.log`. Leia o log só se o trecho não bastar, e com `grep`/`tail`, nunca inteiro.
 
 ## Status da task
 
-O status vive no frontmatter da task e no histórico dela. Só o dono da transição a faz:
+Vive no frontmatter e no histórico da task. Só o dono da transição a faz:
 
-| De → Para | Quem |
+| Para | Quem |
 |---|---|
-| (nova) → `draft` | product-manager |
-| `draft` → `ready` | orquestrador, após `TASK_REVIEW` aprovado |
-| `ready` / `changes_requested` → `in_progress` | orquestrador, ao despachar o Dev |
-| `in_progress` → `implemented` | kmp-developer |
-| `implemented` → `tested` | qa-engineer |
-| `tested` → `reviewed` | orquestrador, com `CODE_REVIEW` (e `UI_REVIEW` se `ui: true`) aprovados |
-| `reviewed` → `accepted` | tech-lead, com `ACCEPTANCE` aprovado |
-| revisão reprovada → `changes_requested` | orquestrador, incrementa `rework_count` |
-| qualquer → `blocked` | quem encontrou o impedimento, com motivo no histórico |
+| `draft` | product-manager |
+| `ready`, `in_progress`, `reviewed`, `changes_requested` | orquestrador |
+| `implemented` | kmp-developer |
+| `tested` | qa-engineer |
+| `accepted` | orquestrador (gate) ou tech-lead (`risk: high`) |
+| `blocked` | quem encontrou o impedimento, com motivo |
 
-`rework_count` máximo 2. Uma terceira reprovação leva a task a `blocked` e o pipeline para.
+Toda mudança acrescenta uma linha no histórico: `| 2026-09-19 | implemented | kmp-developer | resumo |`.
 
-Toda mudança de status acrescenta uma linha no histórico da task:
-`| 2026-09-19 | implemented | kmp-developer | resumo em uma linha |`.
+## Veredito, severidade e ids
 
-## Veredito e severidade
-
-Pareceres (`TASK_REVIEW`, `CODE_REVIEW`, `UI_REVIEW`, `ACCEPTANCE`) têm veredito `APPROVED` ou
-`CHANGES_REQUESTED`, nada além disso.
+Pareceres têm veredito `APPROVED` ou `CHANGES_REQUESTED`, nada além disso.
 
 | Severidade | Significado | Reprova? |
 |---|---|---|
 | `blocker` | Quebra build, perde dado, crash, falha de segurança, critério de aceite não atendido | Sim |
-| `major` | Bug provável, violação de regra do app (`CLAUDE.md`), a11y/i18n quebrados, teste que não testa o que diz | Sim |
+| `major` | Bug provável, violação do `CLAUDE.md` do app, a11y/i18n quebrados, teste que não testa o que diz | Sim |
 | `minor` | Melhoria, legibilidade, nome, sugestão | Não; vai para o relatório |
 
-Um parecer com qualquer `blocker` ou `major` aberto é `CHANGES_REQUESTED`. Sem eles, é `APPROVED`.
+Qualquer `blocker`/`major` aberto = `CHANGES_REQUESTED`.
 
-Cada apontamento tem id estável: prefixo do documento + rodada + número. `TR1-02` (TASK_REVIEW),
-`CR1-03` (CODE_REVIEW), `UI2-01` (UI_REVIEW), `AC1-01` (ACCEPTANCE), `QA1-01` (bug achado pelo QA).
-Quem corrige responde por id.
+Id = prefixo + rodada + número, ex. `CR2-03`. Quem corrige responde por id.
+
+| Prefixo | Origem | Quem corrige |
+|---|---|---|
+| `TR` | TASK_REVIEW | product-manager |
+| `CR` | CODE_REVIEW, código de produção | kmp-developer |
+| `CT` | CODE_REVIEW, testes | qa-engineer |
+| `UI` | UI_REVIEW | kmp-developer |
+| `QA` | bug de produção achado pelo QA | kmp-developer |
+| `VF` | verificação vermelha no gate | kmp-developer |
+| `AC` | ACCEPTANCE do tech-lead | kmp-developer |
 
 ## Bloco de retorno
 
-Todo agente termina a resposta ao orquestrador com este bloco, neste formato:
+Sua última mensagem ao orquestrador é **só** este bloco, mais no máximo 3 linhas de resumo. O
+detalhe está no documento; não o repita.
 
 ```
 ## Resultado
 status: <novo status da task; para PRD/UX_SPEC: draft | aguardando-aprovacao>
 documento: <caminho do documento escrito ou atualizado>
 veredito: APPROVED | CHANGES_REQUESTED
+apontamentos: <ids abertos, ex. CR1-01, CT1-02>
+arquivos: <arquivos de código/teste que você alterou nesta rodada>
 perguntas:
   - <pergunta ao usuário>
 ```
 
-`veredito` só para quem emite parecer. `perguntas` só quando o agente precisa do usuário e parou
-por isso; nesse caso o documento fica como rascunho e o status não avança. Campos que não se
-aplicam são omitidos.
+Omita campos que não se aplicam. `perguntas` só quando você parou por precisar do usuário.
 
 ## Regras que valem para todos
 
-- Nunca faça commit, push ou feche issue. O squad entrega mudanças no working tree e um relatório.
-- Bug fora do escopo da task: registre em "Achados fora de escopo" do seu documento; não corrija.
-- O `CLAUDE.md` do app prevalece sobre qualquer regra genérica do plugin.
-- Não invente o que o usuário não disse. Na dúvida sobre produto, pergunte (PM/Designer) ou
-  registre como premissa explícita.
+- Nunca faça commit, push, stash ou feche issue.
+- Bug fora do escopo da task: registre em "Achados fora de escopo"; não corrija.
+- O `CLAUDE.md` do app prevalece sobre qualquer regra do plugin.
+- Não invente o que o usuário não disse: pergunte (PM/Designer) ou registre como premissa.
